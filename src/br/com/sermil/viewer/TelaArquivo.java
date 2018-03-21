@@ -62,7 +62,6 @@ public class TelaArquivo extends JFrame {
 					try {
 						mineradora.minerar(Documento.getLinhaRA(i));
 						mineradora.anotacoes();
-						mineradora.info();
 						mineradora.getDataAlistamento();
 
 						try {

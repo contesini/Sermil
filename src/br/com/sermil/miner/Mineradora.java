@@ -120,24 +120,6 @@ public class Mineradora {
 
 
 
-	public void info() {
-		this.driver.get("https://www.sermilweb.eb.mil.br/cidadao/recuperar.action?cidadao.ra=" + this.registro.getRa());
-
-		((JavascriptExecutor) this.driver).executeScript("showInfo('arrecadacao');", new Object[0]);
-		sleep(1000);
-
-		WebElement arrecadacoes = this.driver
-				.findElement(By.xpath(".//*[@id='arrecadacao']/div/div[2]/table/tbody/tr/td"));
-		String arrecada = arrecadacoes.getText();
-		if (arrecada.length() > 70) {
-			this.registro.setArrecadacao(arrecada.substring(0, 71) + "1.38");
-		} else {
-			arrecada = "Sem Arrecadacoes";
-			this.registro.setArrecadacao(arrecada);
-		}
-	}
-
-
 	
 	public void getDataAlistamento() {
 		this.driver.get("https://www.sermilweb.eb.mil.br/cidadao/recuperar.action?cidadao.ra=" + this.registro.getRa());
@@ -172,9 +154,6 @@ public class Mineradora {
 		this.driver.get(
 				"https://www.sermilweb.eb.mil.br/cidadao/anotacoes!input.action?cidadao.ra=" + this.registro.getRa());
 		WebElement anotacoes = this.driver.findElement(By.id("anotacoes"));
-		WebElement botaoSalvar = this.driver.findElement(By.xpath(".//*[@id='anotacoes']/div[2]/button[1]"));
-		WebDriverWait wait = new WebDriverWait(this.driver, 45L);
-		wait.until(ExpectedConditions.elementToBeClickable(botaoSalvar));
 		String anota = "";
 		try {
 			anota = anotacoes.getText().substring(33);
@@ -194,7 +173,7 @@ public class Mineradora {
 			FileWriter myWriter = new FileWriter("CidadoSemOcupacao.csv", true);
 			myWriter.append(this.registro.getRa()+ ";" + numeroCSM +";"+ numeroJunta+";"+ this.registro.getDataAlistamento()+ ";" + this.registro.getNome() + ";" 
 			+ this.registro.getDataDeNascimento() + ";" + this.registro.getNomeDaMae() + ";"
-					+ " " + ";" + this.registro.getArrecadacao() +  ";"
+					+ " " +  ";"
 					+ this.registro.getAnotacao() + "\n");
 			myWriter.flush();
 			myWriter.close();
@@ -202,7 +181,7 @@ public class Mineradora {
 			FileWriter myWriter = new FileWriter("FAMs.csv", true);
 			myWriter.append(this.registro.getRa()+ ";" + numeroCSM +";"+ numeroJunta+";"+ this.registro.getDataAlistamento()+ ";" + this.registro.getNome() + ";" 
 			+ this.registro.getDataDeNascimento() + ";" + this.registro.getNomeDaMae() + ";"
-			+ this.registro.getOcupacao() + ";" + this.registro.getArrecadacao() + ";"
+			+ this.registro.getOcupacao() + ";"
 					+ this.registro.getAnotacao() + "\n");
 			
 			myWriter.flush();
